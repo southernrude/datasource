@@ -81,6 +81,18 @@ Body_Avg_Soldnum <- aggregate(RecentSoldnum~Body,data = Wine_Model2,FUN = "mean"
 library(ggplot2)
 ggplot(Body_Avg_Soldnum,aes(x=Body,y=RecentSoldnum,fill=Body)) + geom_bar(stat = "identity") + ggtitle("Body_Avg_Soldnum")
 
+install.packages("plotly")
+library(plotly)
+levels(Wine_Model2$COO)
+dataframe <- data.frame(COO_Avg_Price,levels(Wine_Model2$COO),COO_Avg_RecentSoldnum)
+str(dataframe)
+library(ggplot2)
+p <- ggplot(data = dataframe,aes(x=COO,y=COO_Avg_Price,size=COO_Avg_RecentSoldnum,color=COO)) + geom_point() + theme_bw() + theme(axis.text.x = element_text(angle = 90,hjust = 1))
+library(plotly)
+ggplotly(p)
+write.csv(Wine_Model2,"F:\\WineSample.csv")
+
+boxplot(Wine_Model2$Price~Wine_Model2$COO)
 
 Cabernet <- grep("Cabernet",Wine_Model2$Variety)
 Carmenere <- grep("Carmenere",Wine_Model2$Variety)
